@@ -6,7 +6,7 @@ class Post extends Component {
         let {item, onChosenPost} = this.props;
 
         return (
-            <div>
+            <div className={'divka'}>
                 <p>
                     {item.id} - {item.title}
 

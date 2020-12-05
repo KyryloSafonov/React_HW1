@@ -1,15 +1,25 @@
 import React, {Component} from 'react';
 import Post from "../post/Post";
+import PostService from "../../services/PostService";
+
+
 
 class AllPosts extends Component {
+
+   PostService = new PostService()
 
     state = {posts: [], chosenPost: null};
 
 
+   // onChosenPost = (id) =>{
+   //      let {posts} = this.state;
+   //      let find = posts.find(value => value.id === id);
+   //      this.setState({chosenPost: find});
+   //
+   // }
+
    onChosenPost = (id) =>{
-        let {posts} = this.state;
-        let find = posts.find(value => value.id === id);
-        this.setState({chosenPost: find});
+        this.PostService.getPostById(id).then(value => this.setState({chosenPost: value}))
 
    }
 
@@ -21,7 +31,8 @@ class AllPosts extends Component {
                     posts.map(post => <Post item={post} key={post.id} onChosenPost={this.onChosenPost}/>)
                 }
                 {
-                    chosenPost && <h2>{chosenPost.id} - {chosenPost.title}</h2>
+                      chosenPost && <h2>{chosenPost.id} - {chosenPost.title}</h2>
+
                 }
 
             </div>
@@ -29,11 +40,9 @@ class AllPosts extends Component {
     }
 
     componentDidMount() {
-        fetch('https://jsonplaceholder.typicode.com/posts')
-            .then(value => value.json())
-            .then(posts => {
-                this.setState({posts})
-            })
+
+       this.PostService.getAllPosts().then(value => this.setState({posts: value}))
+
     }
 }
 
