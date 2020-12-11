@@ -1,18 +1,15 @@
-class PostService {
+export default  class PostService{
 
-    url ='https://jsonplaceholder.typicode.com/posts'
+    url = 'https://jsonplaceholder.typicode.com/posts'
 
-    getAllPosts() {
-      return fetch(this.url)
+    posts(){
+        return fetch(this.url)
             .then(value => value.json())
-            .then(posts => {
-                return posts;})
+
     }
 
-    getPostById(id){
-        return fetch(`${this.url}/${id}`).then(value => value.json()).then(value => value)
-
+    post(id){
+        return fetch(this.url + '/' + id)
+            .then(value => value.json());
     }
 }
-
-export default PostService;
