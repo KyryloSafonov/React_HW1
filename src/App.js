@@ -1,25 +1,30 @@
 import React, {Component} from 'react';
-import {cars} from "./dataArray/cars";
-import CarComponents from "./components/car/CarComponents";
-
-
-
+import {
+    Switch,
+    Route,
+    Link
+} from "react-router-dom";
+import AllUsers from "./commponents/AllUsers/AllUsers";
+import AllPosts from "./commponents/AllPosts/AllPosts";
 
 class App extends Component {
-
     render() {
         return (
             <div>
-                {
-                    cars.map(car =>{
-                        let cls = car.id%2 ? 'even': 'odd';
-                        return(
-                            <CarComponents
-                            car={car}
-                            cls={cls}
-                            key={car.id}/>)
-                    })
-                }
+
+                <ul>
+                    <li>
+                        <Link to={'/users'}>to users page</Link>
+                    </li>
+                    <li>
+                        <Link to={'/posts'}>to posts page </Link>
+                    </li>
+                </ul>
+
+                    <Switch>
+                        <Route path={'/users'} component={AllUsers}/>
+                        <Route path={'/posts'} component={AllPosts}/>
+                    </Switch>
             </div>
         );
     }
