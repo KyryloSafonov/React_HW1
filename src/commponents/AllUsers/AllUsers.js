@@ -1,46 +1,44 @@
 import React, {Component} from 'react';
 import UserService from "../../services/UserService";
 import User from "../User/User";
-import {
-    BrowserRouter as Router,
-    Switch,
-    Route,
-    Link,
-    withRouter
-} from "react-router-dom";
+import {Route, withRouter} from "react-router-dom";
 import FullUser from "../FullUser/FullUser";
-import FullPost from "../FullPost/FullPost";
 
 class AllUsers extends Component {
 
     UserService = new UserService();
-    state = {users:[]};
+    state = {users: [], loading: true};
 
-    async componentDidMount() {
-        const users = await this.UserService.users();
-        this.setState({users});
+    componentDidMount() {
+        setTimeout(() =>{
+            this
+                .UserService
+                .allUsers()
+                .then(users => this.setState({users, loading: false}))
+                .catch(err => console.error(err))
+        }, 3000)
     }
 
     render() {
-        const {users} = this.state;
-        const {match:{url}} = this.props;
+        const {users, loading} = this.state;
+        const {match: {url}} = this.props;
         return (
             <div>
                 {
-                    users.map(value => <User item={value} key={value.id}/>)
+                    !loading
+                        ? users.map(value => <User item={value} key={value.id}/>)
+                        : <h1>Loading</h1>
                 }
-
                 <hr/>
-                    <Switch>
-                        <Route path={url + '/:id'} render={(props)=> {
-                            const {match:{params:{id}}} = props;
-                                return <FullUser userId={id} key={id}/>
-                        }}/>
-                    </Switch>
-                <hr/>
+                <Route path={url + '/:id'} render={myRout}/>
             </div>
         );
     }
 }
 
 export default withRouter(AllUsers);
+
+const myRout = (props) => {
+    const {match: {params: {id}}} = props;
+    return <FullUser userId={id} key={id}/>
+}

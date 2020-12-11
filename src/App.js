@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {
-    BrowserRouter as Router,
     Switch,
     Route,
     Link
@@ -11,37 +10,22 @@ import AllPosts from "./commponents/AllPosts/AllPosts";
 class App extends Component {
     render() {
         return (
-            <Router>
-                <div>
-                    <ul>
-                        <li>
-                            <Link to={'/users'}>
-                               to users page
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to={'/posts'}>
-                                to posts page
-                            </Link>
-                        </li>
-                    </ul>
+            <div>
 
-                    <div>
-                        <Switch>
-                            <Route path={'/users'} render={(props)=> {
+                <ul>
+                    <li>
+                        <Link to={'/users'}>to users page</Link>
+                    </li>
+                    <li>
+                        <Link to={'/posts'}>to posts page </Link>
+                    </li>
+                </ul>
 
-                                return <AllUsers/>
-
-                            }}/>
-
-                            <Route path={'/posts'} render={(props)=> {
-                                return <AllPosts/>
-                            }}/>
-                        </Switch>
-                    </div>
-
-                </div>
-            </Router>
+                    <Switch>
+                        <Route path={'/users'} component={AllUsers}/>
+                        <Route path={'/posts'} component={AllPosts}/>
+                    </Switch>
+            </div>
         );
     }
 }

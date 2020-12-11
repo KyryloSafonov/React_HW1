@@ -2,19 +2,16 @@ import React, {Component} from 'react';
 import PostService from "../../services/PostService";
 import Post from "../Post/Post";
 import {
-    BrowserRouter as Router,
-    Switch,
     Route,
-    Link,
     withRouter
 } from "react-router-dom";
 import FullPost from "../FullPost/FullPost";
-import FullUser from "../FullUser/FullUser";
+
 
 class AllPosts extends Component {
 
     PostService = new PostService();
-    state = {posts:[]};
+    state = {posts: []};
 
     async componentDidMount() {
         const posts = await this.PostService.posts();
@@ -23,7 +20,7 @@ class AllPosts extends Component {
 
     render() {
         const {posts} = this.state;
-        const {match:{url}} = this.props;
+        const {match: {url}} = this.props;
         return (
             <div>
                 {
@@ -31,16 +28,11 @@ class AllPosts extends Component {
                 }
 
                 <hr/>
-                    <Switch>
-                        <Route path={url + '/:id'} render={(props)=> {
-                            const {match:{params:{id}}} = props;
-                            return <FullPost postId={id} key={id}/>
-                        }}/>
-                    </Switch>
-                <hr/>
+                <Route path={url + '/:id'} render={(props) => {
+                    const {match: {params: {id}}} = props;
+                    return <FullPost postId={id} key={id}/>
+                }}/>
             </div>
-
-
         );
     }
 }

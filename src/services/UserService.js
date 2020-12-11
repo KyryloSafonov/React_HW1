@@ -2,12 +2,12 @@ export default  class UserService {
 
     url = 'https://jsonplaceholder.typicode.com/users';
 
-    users() {
+    allUsers() {
          return fetch(this.url)
             .then(value => value.json());
     }
 
-    user(id){
+    userByID(id){
         return fetch(this.url + '/' + id)
             .then(value => value.json());
     }
